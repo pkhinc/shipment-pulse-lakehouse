@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: shipment-pulse-lakehouse
+Version: 0.1.0
+Summary: Event driven logistics data platfrom built with Databricks and PySpark
+Requires-Python: <3.13,>3.11
+Description-Content-Type: text/markdown
+Requires-Dist: faker<50,>=30
+Provides-Extra: dev
+Requires-Dist: pytest<10,>=8; extra == "dev"
+Requires-Dist: pytest-cov<8,>=5; extra == "dev"
+Requires-Dist: ruff<1,>=0.9; extra == "dev"
+
+# Shipment Pulse Lakehouse 
+
+An end-to-end logistics data engineering project built with Databricks, PySpark, Delta Lake, Terraform and Streamlit

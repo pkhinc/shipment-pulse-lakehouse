@@ -1,0 +1,33 @@
+#Python
+__pycache__/
+*.py[cod]
+.shipment/
+.pytest_cache/
+.ruff_cache/
+
+#Environment variables and secrets
+.env
+.env.*
+*.pem
+
+#Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+
+#Databricks
+.Databricks/
+.bundle/
+dist/
+build/
+
+#Generated data
+data/generated
+
+#IDE and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

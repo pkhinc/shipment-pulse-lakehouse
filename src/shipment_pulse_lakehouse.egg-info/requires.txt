@@ -1,0 +1,6 @@
+faker<50,>=30
+
+[dev]
+pytest<10,>=8
+pytest-cov<8,>=5
+ruff<1,>=0.9
