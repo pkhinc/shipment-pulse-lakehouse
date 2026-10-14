@@ -1,0 +1,7 @@
+name: shipment_pulse_gold
+libraries: 
+  - glob:
+      include: src/shipment_pulse/gold_views.py
+storage: file:///opt/project/data/generated/pipeline_state/gold
+configuration:
+  spark.sql.session.timeZone: UTC

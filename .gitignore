@@ -9,6 +9,7 @@ __pycache__/
 .env
 .env.*
 *.pem
+derby.log
 
 #Terraform
 .terraform/
