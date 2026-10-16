@@ -62,6 +62,7 @@ in [`sql/databricks_dashboard_kpis.sql`](sql/databricks_dashboard_kpis.sql).
 The data transfer is currently manual; automatic synchronization
 between the local pipeline and Databricks is not implemented.
 
+
 ## Repository structure (selected files)
 
 ```text
@@ -69,12 +70,51 @@ between the local pipeline and Databricks is not implemented.
 ├── Dockerfile                  # Local Spark image
 ├── docker-compose.yml          # Local runtime configuration
 ├── spark-pipeline.yml          # Gold pipeline configuration
-├── src/                        # PySpark pipeline code
+├── run_pipeline.ps1            # End-to-end pipeline orchestration
+├── src/                        # Data generator and PySpark pipeline code
 ├── data/sample/                # Sample source data
-├── docs/                       # Project documentations
+├── docs/                       # Project documentation
 │   └── images/databricks-gold-dashboard.png
 └── sql/databricks_dashboard_kpis.sql
 ```
+
+## Running the local pipeline
+
+The complete local data pipeline can be executed using a single PowerShell command.
+
+### Prerequisites
+
+- Docker Desktop with Docker Compose
+- PowerShell
+- Python environment with the project dependencies installed
+
+Make sure Docker Desktop is running. From the project root directory, execute:
+
+```powershell
+.\run_pipeline.ps1
+```
+
+The script automatically:
+
+1. Generates 20 sample shipments using a fixed random seed (`42`).
+2. Builds the local Apache Spark Docker image.
+3. Ingests source data into the Bronze layer.
+4. Executes three Silver transformations for ports, shipments CDC and shipment events.
+5. Runs the Gold layer using Spark Declarative Pipelines, creating two materialized views: `shipment_summary` and `route_summary`.
+6. Validates the Gold results using Spark SQL assertions.
+
+The expected results for the default sample dataset are:
+
+| Gold dataset | Expected rows |
+| --- | ---: |
+| `shipment_summary` | 20 |
+| `route_summary` | 16 |
+
+The script stops if a processing step fails or the Gold validation detects an unexpected row count.
+
+**Important:** Running the script regenerates source data and overwrites the corresponding local Bronze and Silver outputs. The Gold tables are refreshed. Use a separate project copy if existing generated data must be preserved.
+
+This orchestration runs entirely in the local Docker/Spark environment. It does not automatically update the Databricks dashboard, which uses a manually imported snapshot.
 
 ## Scope and limitations
 
